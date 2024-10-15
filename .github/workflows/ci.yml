@@ -1,0 +1,42 @@
+name: ci
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  id-token: write
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - run: corepack enable
+      - uses: actions/setup-node@v4
+        with:
+          # node-version-file: ".nvmrc"
+          cache: "pnpm"
+      - run: pnpm install
+      - run: pnpm lint
+      - run: pnpm test:types
+      - run: pnpm test:node
+      - run: pnpm test:workerd
+      - run: pnpm build
+      - name: nightly release
+        if: |
+          github.event_name == 'push' &&
+          !contains(github.event.head_commit.message, '[skip-release]') &&
+          !startsWith(github.event.head_commit.message, 'docs')
+        run: |
+          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" >> ~/.npmrc &&
+          pnpm changelogen --canary nightly --publish
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_CONFIG_PROVENANCE: true
