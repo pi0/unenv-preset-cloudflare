@@ -30,19 +30,19 @@
     "test:types": "tsc --noEmit"
   },
   "dependencies": {
-    "unenv": "npm:unenv-nightly@2.0.0-20241015-143809-f32d35d"
+    "unenv": "npm:unenv-nightly@2.0.0-20241018-145450-e666fcf"
   },
   "devDependencies": {
     "@types/node": "^22.7.4",
     "changelogen": "^0.5.7",
-    "eslint": "^9.12.0",
+    "eslint": "^9.13.0",
     "eslint-config-unjs": "^0.4.1",
     "jiti": "^2.3.3",
     "prettier": "^3.3.3",
-    "typescript": "^5.6.2",
+    "typescript": "^5.6.3",
     "unbuild": "^2.0.0",
-    "workerd": "^1.20241004.0",
-    "wrangler": "^3.80.0"
+    "workerd": "^1.20241022.0",
+    "wrangler": "^3.82.0"
   },
-  "packageManager": "pnpm@9.12.1"
+  "packageManager": "pnpm@9.12.2"
 }
